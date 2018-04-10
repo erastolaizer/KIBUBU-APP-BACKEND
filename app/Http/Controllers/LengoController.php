@@ -14,6 +14,8 @@ class LengoController extends Controller
           'user_id'=> 'required'
         ]);
 
+         $checkLengo == Lengo::where('lengo_name', $request->lengo_name)->first();
+         if(!$checkLengo){
           $lengo = new Lengo;
           $lengo->lengo_name = $request->lengo_name;
           $lengo->time = $request->time;
@@ -30,6 +32,14 @@ class LengoController extends Controller
           'code'=>200
         ];
         return response()->json($response,200);
+      }
+      else {
+        $response = [
+          'message' =>"You already have that lengo",
+          'code'=>400
+        ];
+        return response()->json($response,400);
+        }
     }
 
     public function getMalengo($user_id){
